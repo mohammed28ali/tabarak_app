@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color splashBackGroundColor = Color(0xffE9FAFF);
+  static const Color splashBackGroundColor = Color(0xffFFFFFF);
   static const Color mainColor = Color(0xff71BE44);
   static const Color textFormFiledBackgroundColor = Color(0xffF1F5FB);
   static const Color whiteColor = Color(0xffFFFFFF);

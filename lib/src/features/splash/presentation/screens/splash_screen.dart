@@ -20,7 +20,7 @@ class SplashScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => di.sl<SplashCubit>()..loadData(),
       child: Scaffold(
-        backgroundColor: AppColors.splashBackGroundColor,
+        backgroundColor: AppColors.whiteColor,
         body: BlocListener<SplashCubit, SplashState>(
           listener: (context, state) async {
             if (state == SplashState.loaded) {
@@ -34,8 +34,8 @@ class SplashScreen extends StatelessWidget {
           },
           child: Center(
             child: LogoWidget(
-              height: context.height * 0.5,
-              width: context.width * 0.5,
+              height: context.height * 0.6,
+              width: context.width * 0.6,
             ),
           ),
         ),

@@ -24,6 +24,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
   dartz: ^0.10.1
   get_it: ^8.0.1
+  flutter_localization: ^0.2.2
 
 dev_dependencies:
   flutter_test:
@@ -38,7 +39,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - assets/
+   - assets/images/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
