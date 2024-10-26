@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'package:tabark_innov8/src/config/routes/app_route.dart';
 import 'package:tabark_innov8/src/config/theme/app_theme.dart';
-import 'package:tabark_innov8/src/core/utils/app_strings.dart';
+import 'package:tabark_innov8/src/core/utils/app_strings.dart'; // Import localization
 
 class TabarakApp extends StatelessWidget {
   const TabarakApp({super.key});
@@ -22,6 +21,7 @@ class TabarakApp extends StatelessWidget {
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
       localeResolutionCallback: (locale, supportedLocales) {
         if (locale != null) {

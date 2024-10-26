@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tabark_innov8/src/features/splash/domain/usecase/usecase.dart';
-import 'package:tabark_innov8/src/features/splash/presentation/cubit/state.dart';
+import 'package:tabark_innov8/src/features/splash/presentation/business_logic/state.dart';
 
 class SplashCubit extends Cubit<SplashState> {
   final LoadDataUseCase loadDataUseCase;

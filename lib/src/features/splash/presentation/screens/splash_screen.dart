@@ -7,10 +7,11 @@ import 'package:tabark_innov8/src/core/extenstions/navigator_extention.dart';
 import 'package:tabark_innov8/src/core/extenstions/size_extention.dart';
 import 'package:tabark_innov8/src/core/utils/app_colors.dart';
 import 'package:tabark_innov8/src/core/widgets/logo_widget.dart';
-import 'package:tabark_innov8/src/features/splash/presentation/cubit/cubit.dart';
-import 'package:tabark_innov8/src/features/splash/presentation/cubit/state.dart';
+
 import 'package:tabark_innov8/src/config/dependency_injection/dependency_injection.dart'
     as di;
+import 'package:tabark_innov8/src/features/splash/presentation/business_logic/cubit.dart';
+import 'package:tabark_innov8/src/features/splash/presentation/business_logic/state.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -24,12 +25,14 @@ class SplashScreen extends StatelessWidget {
         body: BlocListener<SplashCubit, SplashState>(
           listener: (context, state) async {
             if (state == SplashState.loaded) {
-              bool loggedIn = await isLoggedIn();
-              if (loggedIn) {
-                context.pushAndRemoveNamed(Routes.homeScreen);
-              } else {
-                context.pushAndRemoveNamed(Routes.loginScreen);
-              }
+              context.pushAndRemoveNamed(Routes.signinScreen);
+
+              // bool loggedIn = await isLoggedIn();
+              // if (loggedIn) {
+              //   context.pushAndRemoveNamed(Routes.homeScreen);
+              // } else {
+              //   context.pushAndRemoveNamed(Routes.signinScreen);
+              // }
             }
           },
           child: Center(

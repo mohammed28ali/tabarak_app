@@ -5,6 +5,5 @@ import 'package:tabark_innov8/src/config/dependency_injection/dependency_injecti
 
 void main() async {
   await di.init();
-
   runApp(const TabarakApp());
 }

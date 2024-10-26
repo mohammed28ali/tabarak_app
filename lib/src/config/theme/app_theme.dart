@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tabark_innov8/src/core/utils/constants.dart';
 
 import '../../core/utils/app_colors.dart';
 
@@ -6,6 +7,7 @@ ThemeData appTheme() {
   return ThemeData(
       primaryColor: AppColors.mainColor,
       hintColor: AppColors.hintColor,
+      indicatorColor: AppColors.mainColor,
       brightness: Brightness.light,
       useMaterial3: true,
       scaffoldBackgroundColor: Colors.white,
@@ -18,7 +20,7 @@ ThemeData appTheme() {
           fontWeight: FontWeight.bold,
         ),
       ),
-      //fontFamily: AppStrings.fontFamily,
+      fontFamily: AppConstant.fontFamily,
       textTheme: const TextTheme(
         bodyMedium: TextStyle(
             color: Colors.white,

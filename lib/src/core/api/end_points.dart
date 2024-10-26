@@ -1,6 +1,10 @@
 class EndPoints {
-  static const String baseUrl =
-      'http://mdev.yemensoft.net:8087/OnyxDeliveryService/Service.svc';
-  static const String logIn = '/CheckDeliveryLogin';
-  static const String getDeliveryBillsItems = '/GetDeliveryBillsItems';
+  static const String baseUrl = 'http://35.156.220.14/test/hr_app_api';
+  static const String register = '/register';
+  static const String logIn = '/login';
+  static const String forgetPassword = '/forget_password';
+  static const String verifyOtp = '/verify_otp';
+  static const String checkin = '/checkin';
+  static const String checkout = '/checkout';
+  static const String enableNotification = '/enable_notification';
 }

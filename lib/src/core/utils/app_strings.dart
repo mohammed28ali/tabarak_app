@@ -2,42 +2,46 @@ class AppStrings {
   //shared
   static const String appName = 'Tabarak';
 
-  //login screen
-  static const String welcomeBack = 'Welcome Back!';
-  static const String logBackIntoYourAccount = 'Log back into your account';
-  static const String userID = 'User ID';
-  static const String password = 'Password';
-  static const String showMore = 'Show More';
-  static const String logIn = 'Log in';
-  static const String pleaseEnterYourUserId = 'Please enter your UserId';
-  static const String pleaseEnterPassword = 'Please enter password';
-
-  // choose language widget
-  static const String chooseLanguage = 'Choose Language';
-  static const String apply = 'Apply';
+  //auth
+  static const String emailAndUserName = 'البريد الإلكتروني / اسم المستخدم';
+  static const String password = 'كلمة المرور';
+  static const String confirmPassword = 'تأكيد كلمة المرور';
+  static const String writeEmailAndSendCode =
+      'أكتب بريدك الإلكتروني و سيتم إرسال كود التأكيد إليك';
+  static const String writeSentCode =
+      'أكتب كود التأكيد الذي تم إرساله إلى بريدك الإلكتروني';
+  static const String writeNewPassword = 'أكتب كلمة المرور الجديدة';
+  static const String name = 'الاسم';
+  static const String signin = 'تسجيل الدخول';
+  static const String purchase = 'اشتراك';
+  static const String confirm = 'تأكيد';
+  static const String close = 'إلغاء';
+  static const String next = 'التالي';
+  static const String forgetPassword = 'نسيت كلمة المرور';
+  static const String confirmCode = 'كود التأكيد';
+  static const String changePassword = 'تغيير كلمة المرور';
 
   //home screen
-  static const String news = 'New';
-  static const String status = 'Status';
-  static const String totalPrice = 'Total price';
-  static const String date = 'Date';
-  static const String le = 'LE';
-  static const String delivering = 'Delivering';
-  static const String returned = 'Returned';
-  static const String delivered = 'Delivered';
-  static const String others = 'Others';
-  static const String order = 'Order';
-  static const String details = 'details';
-  static const String noOrdersYet = 'No orders yet';
-  static const String failedToFetchDeliveryData =
-      'Failed to fetch delivery data';
-  static const String errorHasOccured = 'Error has occured';
-  static const String youdoNotHaveAnyOrdersInYourHistory =
-      'You don\'t have any orders in your history.';
+  static const String checkIn = 'تسجيل الحضور';
+  static const String checkOut = 'تسجيل الانصراف';
+  static const String showMissions = 'عرض المأموريات';
+  static const String addMission = 'إضافة مأمورية';
+  static const String logout = 'تسجيل الخروج';
+  static const String locationNotDetect = 'لم يتم تحديد الموقع';
+  static const String openLocationSettings = 'فتح إعدادات الموقع';
+  static const String receiveNotifications = 'استقبال الاشعارات';
+  static const String makeSureToRegisterYourAttendance =
+      'متأكد من تسجيل الحضور';
+  static const String makesurCheckOut = 'متأكد من تسجيل الانصراف';
 
-  static const String english = 'Engrish';
-  static const String arabic = 'Arabic';
-  static const String arabicAr = 'العربية';
-  //routing
-  static const String noRouteFound = 'No Route Found';
+  // add mission
+  static const String missionType = 'نوع المأمورية';
+  static const String missionDate = 'تاريخ المأمورية';
+  static const String statement = 'البيان';
+  static const String add = 'أضف';
+  //Missions
+  static const String missions = 'المأموريات';
+  static const String update = 'تحديث';
+
+  static const String noRouteFound = 'خطأ لقد حدذ';
 }
