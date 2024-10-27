@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tabark_innov8/src/features/add_mission/presentation/bussiness_logic/cubit.dart';
 import 'package:tabark_innov8/src/features/add_mission/presentation/screens/add_mission_screen.dart';
 import 'package:tabark_innov8/src/features/authentication/forget_password/presentation/business_logic/forget_password_cubit/orget_password_cubit.dart';
 import 'package:tabark_innov8/src/features/authentication/forget_password/presentation/business_logic/vefiy_otp_cubit/cubit.dart';
@@ -11,6 +12,7 @@ import 'package:tabark_innov8/src/features/authentication/signup/presentation/bu
 import 'package:tabark_innov8/src/features/authentication/signup/presentation/screens/signup_screen.dart';
 import 'package:tabark_innov8/src/features/home/presentataion/bussines_logic/cubit.dart';
 import 'package:tabark_innov8/src/features/home/presentataion/screens/home_screen.dart';
+import 'package:tabark_innov8/src/features/view_mission/presentation/business_logic/cubit.dart';
 import 'package:tabark_innov8/src/features/view_mission/presentation/screens/view_mission_screen.dart';
 
 import '../../core/utils/app_strings.dart';
@@ -58,13 +60,13 @@ class AppRoutes {
         return MaterialPageRoute(
             builder: ((context) => BlocProvider(
                   create: (context) => di.sl<VerifyOtpCubit>(),
-                  child: const VerifyOtpScreen(),
+                  child: VerifyOtpScreen(),
                 )));
       case Routes.enterNewPasswordScreen:
         return MaterialPageRoute(
             builder: ((context) => BlocProvider(
                   create: (context) => di.sl<VerifyOtpCubit>(),
-                  child: const EnterNewPasswordScreen(),
+                  child: EnterNewPasswordScreen(),
                 )));
       case Routes.homeScreen:
         return MaterialPageRoute(
@@ -74,10 +76,18 @@ class AppRoutes {
                 )));
       case Routes.addMission:
         return MaterialPageRoute(
-            builder: ((context) => const AddMissionScreen()));
+            builder: ((context) => BlocProvider(
+                  create: (context) =>
+                      di.sl<MissionCubit>()..fetchMissionTypes(),
+                  child: const AddMissionScreen(),
+                )));
       case Routes.viewMission:
         return MaterialPageRoute(
-            builder: ((context) => const ViewMissionScreen()));
+            builder: ((context) => BlocProvider(
+                  create: (context) =>
+                      di.sl<ViewMissionCubit>()..fetchMissions(1),
+                  child: const ViewMissionScreen(),
+                )));
 
       default:
         return undefinedRoute();

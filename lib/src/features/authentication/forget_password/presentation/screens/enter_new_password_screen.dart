@@ -15,15 +15,25 @@ import '../../../../../core/widgets/custom_common_button.dart';
 import '../../../../../core/widgets/custom_text_field.dart';
 
 class EnterNewPasswordScreen extends StatelessWidget {
-  const EnterNewPasswordScreen({super.key});
+  EnterNewPasswordScreen({super.key});
+
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(
-          Icons.arrow_back,
-          color: AppColors.darkGreyColor2,
+        leading: GestureDetector(
+          onTap: () {
+            context.pop();
+          },
+          child: const Icon(
+            Icons.arrow_back,
+            color: AppColors.darkGreyColor2,
+          ),
         ),
         title: const CustomText(
           text: AppStrings.changePassword,
@@ -33,86 +43,95 @@ class EnterNewPasswordScreen extends StatelessWidget {
         centerTitle: false,
         automaticallyImplyLeading: true,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Divider(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppSize.s20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomText(
-                  text: AppStrings.writeNewPassword,
-                  fontSize: AppSize.s20,
-                  color: AppColors.darkGreyColor2,
-                ),
-                (context.height * 0.025).emptyBoxHeight,
-                CustomTextField(
-                  hasPrefix: true,
-                  hintText: AppStrings.password,
-                  prefixIcon: SvgPicture.asset(
-                    AppImages.lockIcon,
-                    height: context.height * 0.005,
-                    width: context.width * 0.005,
-                    fit: BoxFit.contain,
+      body: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Divider(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppSize.s20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const CustomText(
+                    text: AppStrings.writeNewPassword,
+                    fontSize: AppSize.s20,
+                    color: AppColors.darkGreyColor2,
                   ),
-                  suffixIcon: IconButton(
-                    highlightColor: Colors.transparent,
-                    onPressed: () {},
-                    icon: Icon(
-                      PhosphorIcons.eye_slash,
-                      size: context.width * 0.09,
-                      color: AppColors.darkGreyColor,
+                  (context.height * 0.025).emptyBoxHeight,
+                  CustomTextField(
+                    controller: passwordController,
+                    hasPrefix: true,
+                    hintText: AppStrings.password,
+                    prefixIcon: SvgPicture.asset(
+                      AppImages.lockIcon,
+                      height: context.height * 0.005,
+                      width: context.width * 0.005,
+                      fit: BoxFit.contain,
                     ),
-                  ),
-                  obscure: true,
-                  validate: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    return null;
-                  },
-                ),
-                (context.height * 0.025).emptyBoxHeight,
-                CustomTextField(
-                  hasPrefix: true,
-                  hintText: AppStrings.confirmPassword,
-                  prefixIcon: SvgPicture.asset(
-                    AppImages.lockIcon,
-                    height: context.height * 0.005,
-                    width: context.width * 0.005,
-                    fit: BoxFit.contain,
-                  ),
-                  suffixIcon: IconButton(
-                    highlightColor: Colors.transparent,
-                    onPressed: () {},
-                    icon: Icon(
-                      PhosphorIcons.eye_slash,
-                      size: context.width * 0.09,
-                      color: AppColors.darkGreyColor,
+                    suffixIcon: IconButton(
+                      highlightColor: Colors.transparent,
+                      onPressed: () {},
+                      icon: Icon(
+                        PhosphorIcons.eye_slash,
+                        size: context.width * 0.09,
+                        color: AppColors.darkGreyColor,
+                      ),
                     ),
+                    obscure: true,
+                    validate: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppStrings.pleaseEnterPassword;
+                      }
+                      return null;
+                    },
                   ),
-                  obscure: true,
-                  validate: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please confirm your password';
-                    }
-
-                    return null;
-                  },
-                ),
-                (context.height * 0.025).emptyBoxHeight,
-                CommonButton(
-                  text: AppStrings.confirm,
-                  onPressed: () {
-                    context.pushNamed(Routes.signinScreen);
-                  },
-                ),
-              ],
+                  (context.height * 0.025).emptyBoxHeight,
+                  CustomTextField(
+                    controller: confirmPasswordController,
+                    hasPrefix: true,
+                    hintText: AppStrings.confirmPassword,
+                    prefixIcon: SvgPicture.asset(
+                      AppImages.lockIcon,
+                      height: context.height * 0.005,
+                      width: context.width * 0.005,
+                      fit: BoxFit.contain,
+                    ),
+                    suffixIcon: IconButton(
+                      highlightColor: Colors.transparent,
+                      onPressed: () {},
+                      icon: Icon(
+                        PhosphorIcons.eye_slash,
+                        size: context.width * 0.09,
+                        color: AppColors.darkGreyColor,
+                      ),
+                    ),
+                    obscure: true,
+                    validate: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppStrings.pleaseEnterConfirmPassword;
+                      } else if (passwordController.text !=
+                          confirmPasswordController.text) {
+                        return AppStrings.passwordsDonotMatch;
+                      }
+                      return null;
+                    },
+                  ),
+                  (context.height * 0.025).emptyBoxHeight,
+                  CommonButton(
+                    text: AppStrings.confirm,
+                    onPressed: () {
+                      if (_formKey.currentState?.validate() ?? false) {
+                        context.pushNamed(Routes.signinScreen);
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

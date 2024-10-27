@@ -9,6 +9,8 @@ class SignupCubit extends Cubit<SignupState> {
   String fullName = '';
   String userName = '';
   String password = '';
+  bool showPassword = false;
+  bool showConfirmPassword = false;
 
   SignupCubit(this.registerUserUseCase) : super(SignupInitial());
 
@@ -23,5 +25,19 @@ class SignupCubit extends Cubit<SignupState> {
       (failure) => emit(SignupFailure(failure.message)),
       (_) => emit(SignupSuccess()),
     );
+  }
+
+  void togglePasswordVisibility() {
+    emit(SignupLoading());
+
+    showPassword = !showPassword;
+    emit(SignupPasswordVisibilityChanged());
+  }
+
+  void toggleConfirmPasswordVisibility() {
+    emit(SignupLoading());
+
+    showConfirmPassword = !showConfirmPassword;
+    emit(SignupPasswordVisibilityChanged());
   }
 }

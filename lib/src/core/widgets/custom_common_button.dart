@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:tabark_innov8/src/core/utils/app_values.dart';
 import '../utils/app_colors.dart';
 
@@ -10,16 +11,18 @@ class CommonButton extends StatelessWidget {
   final double borderRadius;
   final double padding;
   final bool isOutlined;
+  final SvgPicture? icon;
 
   const CommonButton({
     Key? key,
     required this.text,
     required this.onPressed,
     this.color = AppColors.mainColor,
-    this.borderColor, // Optional: defaults to `color` if not provided
+    this.borderColor,
     this.borderRadius = AppSize.s12,
     this.padding = 16.0,
     this.isOutlined = false,
+    this.icon,
   }) : super(key: key);
 
   @override
@@ -38,12 +41,21 @@ class CommonButton extends StatelessWidget {
           ),
           padding: EdgeInsets.all(padding),
         ),
-        child: Text(
-          text,
-          style: TextStyle(
-            color: isOutlined ? borderColor ?? color : Colors.white,
-            fontSize: AppSize.s18,
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (icon != null) ...[
+              icon!,
+              SizedBox(width: 8),
+            ],
+            Text(
+              text,
+              style: TextStyle(
+                color: isOutlined ? borderColor ?? color : Colors.white,
+                fontSize: AppSize.s18,
+              ),
+            ),
+          ],
         ),
       ),
     );

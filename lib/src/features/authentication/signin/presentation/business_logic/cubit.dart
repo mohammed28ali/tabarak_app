@@ -5,6 +5,7 @@ import 'package:tabark_innov8/src/features/authentication/signin/presentation/bu
 
 class LoginCubit extends Cubit<LoginState> {
   final LoginUseCase loginUseCase;
+  bool showPassword = false;
 
   LoginCubit(this.loginUseCase) : super(LoginInitial());
 
@@ -16,5 +17,12 @@ class LoginCubit extends Cubit<LoginState> {
     } catch (e) {
       emit(LoginFailure(e.toString()));
     }
+  }
+
+  void togglePasswordVisibility() {
+    emit(LoginLoading());
+
+    showPassword = !showPassword;
+    emit(LoginPasswordVisibilityChanged());
   }
 }

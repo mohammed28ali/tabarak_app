@@ -18,14 +18,20 @@ import '../business_logic/forget_password_cubit/orget_password_cubit.dart';
 class ForgetPasswordScreen extends StatelessWidget {
   ForgetPasswordScreen({super.key});
   final _usernameController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(
-          Icons.arrow_back,
-          color: AppColors.darkGreyColor2,
+        leading: GestureDetector(
+          onTap: () {
+            context.pop();
+          },
+          child: const Icon(
+            Icons.arrow_back,
+            color: AppColors.darkGreyColor2,
+          ),
         ),
         title: const CustomText(
           text: AppStrings.forgetPassword,
@@ -35,52 +41,57 @@ class ForgetPasswordScreen extends StatelessWidget {
         centerTitle: false,
         automaticallyImplyLeading: true,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Divider(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppSize.s20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const CustomText(
-                  text: AppStrings.writeEmailAndSendCode,
-                  fontSize: AppSize.s16,
-                  color: Colors.black,
-                ),
-                (context.height * 0.025).emptyBoxHeight,
-                CustomTextField(
-                  controller: _usernameController,
-                  hasPrefix: true,
-                  hintText: AppStrings.emailAndUserName,
-                  prefixIcon: SvgPicture.asset(
-                    AppImages.emailIcon,
-                    height: context.height * 0.005,
-                    width: context.width * 0.005,
-                    fit: BoxFit.contain,
+      body: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Divider(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppSize.s20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const CustomText(
+                    text: AppStrings.writeEmailAndSendCode,
+                    fontSize: AppSize.s16,
+                    color: Colors.black,
                   ),
-                  validate: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your username or email';
-                    }
-                    return null;
-                  },
-                ),
-                (context.height * 0.025).emptyBoxHeight,
-                CommonButton(
-                  text: AppStrings.next,
-                  onPressed: () {
-                    context
-                        .read<ForgetPasswordCubit>()
-                        .forgetPassword(_usernameController.text);
-                    context.pushNamed(Routes.verifyOtpScreen);
-                  },
-                ),
-              ],
+                  (context.height * 0.025).emptyBoxHeight,
+                  CustomTextField(
+                    controller: _usernameController,
+                    hasPrefix: true,
+                    hintText: AppStrings.emailAndUserName,
+                    prefixIcon: SvgPicture.asset(
+                      AppImages.emailIcon,
+                      height: context.height * 0.005,
+                      width: context.width * 0.005,
+                      fit: BoxFit.contain,
+                    ),
+                    validate: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppStrings.pleaseEnterUsernameOrEmail;
+                      }
+                      return null;
+                    },
+                  ),
+                  (context.height * 0.025).emptyBoxHeight,
+                  CommonButton(
+                    text: AppStrings.next,
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        context
+                            .read<ForgetPasswordCubit>()
+                            .forgetPassword(_usernameController.text);
+                        context.pushNamed(Routes.verifyOtpScreen);
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

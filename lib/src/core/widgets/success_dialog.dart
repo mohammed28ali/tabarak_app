@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tabark_innov8/src/core/extenstions/navigator_extention.dart';
 import 'package:tabark_innov8/src/core/extenstions/size_extention.dart';
 import 'package:tabark_innov8/src/core/utils/app_colors.dart';
+import 'package:tabark_innov8/src/core/widgets/custom_text.dart';
 
 import '../utils/app_images.dart';
 
@@ -31,11 +32,15 @@ class SuccessDialogPopup extends StatelessWidget {
                   icon: const Icon(Icons.close))),
           SvgPicture.asset(
             AppImages.successIcon,
-            height: context.width * 0.15,
+            height: context.width * 0.35,
           ),
+          CustomText(
+            text: text,
+            color: Colors.black,
+            fontSize: 20,
+          )
         ],
       ),
-      actions: [],
     );
   }
 

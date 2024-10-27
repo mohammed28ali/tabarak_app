@@ -46,68 +46,80 @@ class CustomTextField extends StatelessWidget {
       this.onChanged,
       this.height,
       this.hintTextColor});
-
+  // height: height ?? AppSize.s60,
+  // decoration: BoxDecoration(
+  // border: Border.all(color: AppColors.textFormFiledBorderColor),
+  // color: AppColors.whiteColor,
+  // borderRadius: BorderRadius.circular(AppSize.s12)),
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height ?? AppSize.s60,
-      decoration: BoxDecoration(
-          border: Border.all(color: AppColors.textFormFiledBorderColor),
-          color: AppColors.whiteColor,
-          borderRadius: BorderRadius.circular(AppSize.s12)),
-      child: Center(
+    return Center(
         child: TextFormField(
-            inputFormatters: [
-              ...?inputFormatters,
-              ArabicToEnglishNumberFormatter(),
-            ],
-            maxLines: maxLines ?? 1,
-            onFieldSubmitted: onFieldSubmitted,
-            onChanged: onChanged,
-            controller: controller,
-            obscureText: obscure,
-            // obscuringCharacter: '●',
-            ////  style: const TextStyle( color: ColorManager.primaryColor, ),
-            onSaved: onSaved,
-            validator: validate,
-            autofocus: false,
-            onTap: onTap,
-            readOnly: readonly!,
-            keyboardType: keyboardType,
-            textAlign: textAlign ?? TextAlign.start,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            decoration: InputDecoration(
-              errorStyle: const TextStyle(
-                fontSize: 10, //height: 1.5
-                //0.042
-              ),
-              prefixIcon: hasPrefix
-                  ? Padding(
-                      padding: const EdgeInsets.only(
-                          top: 10, bottom: 10, right: 10, left: 10),
-                      child: prefixIcon,
-                    )
-                  : null,
-              suffixIcon: suffixIcon,
-              hintText: hintText,
-              labelStyle: TextStyle(color: hintTextColor ?? AppColors.hintColor
-                  // fontSize: 16,
-                  ),
-              hintStyle:
-                  const TextStyle(color: AppColors.hintColor, fontSize: 15),
-              labelText: labelText,
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              focusedBorder: InputBorder.none,
-              contentPadding: EdgeInsets.only(
-                  right: 20,
-                  left: 20,
-                  top: suffixIcon == null
-                      ? context.height * 0.015
-                      : context.height * 0.015),
-              border: InputBorder.none,
-            )),
+      inputFormatters: [
+        ...?inputFormatters,
+        ArabicToEnglishNumberFormatter(),
+      ],
+      maxLines: maxLines ?? 1,
+      onFieldSubmitted: onFieldSubmitted,
+      onChanged: onChanged,
+      controller: controller,
+      obscureText: obscure,
+      onSaved: onSaved,
+      validator: validate,
+      autofocus: false,
+      onTap: onTap,
+      readOnly: readonly!,
+      keyboardType: keyboardType,
+      textAlign: textAlign ?? TextAlign.start,
+      obscuringCharacter: '*',
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      decoration: InputDecoration(
+        errorStyle: const TextStyle(
+          fontSize: 10,
+        ),
+        prefixIcon: hasPrefix
+            ? Padding(
+                padding: const EdgeInsets.only(
+                    top: 10, bottom: 10, right: 10, left: 10),
+                child: prefixIcon,
+              )
+            : null,
+        suffixIcon: suffixIcon,
+        hintText: hintText,
+        labelStyle: TextStyle(color: hintTextColor ?? AppColors.hintColor),
+        hintStyle: const TextStyle(color: AppColors.hintColor, fontSize: 15),
+        labelText: labelText,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        contentPadding: EdgeInsets.only(
+          right: 20,
+          left: 20,
+          top: suffixIcon == null
+              ? context.height * 0.05
+              : context.height * 0.05,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSize.s12),
+          borderSide: const BorderSide(
+            color: AppColors.textFormFiledBorderColor,
+            width: 1.0,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSize.s12),
+          borderSide: const BorderSide(
+            color: AppColors.textFormFiledBorderColor,
+            width: 1.0,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppSize.s12),
+          borderSide: const BorderSide(
+            color: AppColors.textFormFiledBorderColor,
+            width: 2.0,
+          ),
+        ),
       ),
-    );
+    ));
   }
 }
 

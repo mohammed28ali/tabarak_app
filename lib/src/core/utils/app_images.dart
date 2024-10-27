@@ -8,6 +8,8 @@ class AppImages {
   static const String addIcon = 'assets/icons/add_icon.svg';
   static const String listIcon = 'assets/icons/list_icon.svg';
   static const String blackLoginIcon = 'assets/icons/black_login_icon.svg';
+  static const String whiteLoginIcon = 'assets/icons/white_login.svg';
   static const String blackLogoutIcon = 'assets/icons/black_logout_icon.svg';
+  static const String whiteLogoutIcon = 'assets/icons/white_logout.svg';
   static const String successIcon = 'assets/icons/sucess_icon.svg';
 }

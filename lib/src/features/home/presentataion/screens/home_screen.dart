@@ -5,23 +5,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tabark_innov8/src/config/routes/app_route.dart';
 import 'package:tabark_innov8/src/core/extenstions/empty_box_extention.dart';
 import 'package:tabark_innov8/src/core/extenstions/navigator_extention.dart';
 import 'package:tabark_innov8/src/core/extenstions/size_extention.dart';
+import 'package:tabark_innov8/src/core/extenstions/toast_extention.dart';
 import 'package:tabark_innov8/src/core/utils/app_colors.dart';
 import 'package:tabark_innov8/src/core/utils/app_strings.dart';
 import 'package:tabark_innov8/src/core/utils/app_values.dart';
 import 'package:tabark_innov8/src/core/widgets/confirm_dialog.dart';
-import 'package:tabark_innov8/src/core/widgets/custom_common_button.dart';
 import 'package:tabark_innov8/src/core/widgets/custom_text.dart';
 import 'package:tabark_innov8/src/core/widgets/logo_widget.dart';
 import 'package:tabark_innov8/src/features/home/domain/model/model.dart';
+import 'package:tabark_innov8/src/features/home/presentataion/bussines_logic/state.dart';
 import 'package:tabark_innov8/src/features/home/presentataion/widgets/custom_drawer.dart';
 import 'package:tabark_innov8/src/features/home/presentataion/widgets/home_grid_item_widget.dart';
 import 'package:tabark_innov8/src/features/home/presentataion/widgets/location_container.dart';
 
 import '../../../../core/utils/app_images.dart';
+import '../../../../core/widgets/success_dialog.dart';
 import '../bussines_logic/cubit.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -152,47 +155,82 @@ class HomeScreen extends StatelessWidget {
       drawer: const CustomDrawer(),
       appBar: AppBar(
         title: const CustomText(
-          text: 'مرحبأ محمد',
+          text: 'مرحبأ',
           fontSize: 20,
           color: Colors.black,
         ),
         centerTitle: false,
       ),
       bottomNavigationBar: const LocationContainer(),
-      body: Column(
-        children: [
-          const Divider(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppSize.s20),
-            child: Column(
-              children: [
-                LogoWidget(
-                    height: context.height * 0.2, width: context.width * 0.3),
-                GridView.builder(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                  ),
-                  itemCount: items.length,
-                  itemBuilder: (context, index) {
-                    return HomeGridItemWidget(item: items[index]);
-                  },
-                ),
-                (context.height * 0.1).emptyBoxHeight,
-                GestureDetector(
-                  onTap: () {},
-                  child: const CustomText(
-                    text: AppStrings.logout,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+      body: BlocConsumer<CheckInCheckOutCubit, CheckInCheckOutState>(
+        listener: (context, state) {
+          if (state is CheckInSuccessState) {
+            showDialog(
+              context: context,
+              builder: (context) => const SuccessDialogPopup(
+                text: AppStrings.checkInSuccess,
+              ),
+            );
+          } else if (state is CheckOutSuccessState) {
+            showDialog(
+              context: context,
+              builder: (context) => const SuccessDialogPopup(
+                text: AppStrings.checkOutSuccess,
+              ),
+            );
+          } else if (state is CheckInFailureState ||
+              state is CheckOutFailureState ||
+              state is EnableNotificationFailureState) {
+            context.errorSnackBar(AppStrings.noRouteFound, 2);
+          }
+        },
+        builder: (context, state) {
+          return state is LoadingState
+              ? const Center(child: CircularProgressIndicator())
+              : Column(
+                  children: [
+                    const Divider(),
+                    Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: AppSize.s20),
+                      child: Column(
+                        children: [
+                          LogoWidget(
+                              height: context.height * 0.2,
+                              width: context.width * 0.3),
+                          GridView.builder(
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 16,
+                              mainAxisSpacing: 16,
+                            ),
+                            itemCount: items.length,
+                            itemBuilder: (context, index) {
+                              return HomeGridItemWidget(item: items[index]);
+                            },
+                          ),
+                          (context.height * 0.1).emptyBoxHeight,
+                          GestureDetector(
+                            onTap: () async {
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              await prefs.clear();
+                              context.pushAndRemoveNamed(Routes.signinScreen);
+                            },
+                            child: const CustomText(
+                              text: AppStrings.logout,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+        },
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tabark_innov8/src/core/extenstions/empty_box_extention.dart';
+import 'package:tabark_innov8/src/core/extenstions/navigator_extention.dart';
 import 'package:tabark_innov8/src/core/extenstions/size_extention.dart';
 import 'package:tabark_innov8/src/core/extenstions/toast_extention.dart';
 import 'package:tabark_innov8/src/core/utils/app_strings.dart';
@@ -13,6 +14,7 @@ import 'package:tabark_innov8/src/core/widgets/custom_text.dart';
 import 'package:tabark_innov8/src/core/widgets/custom_text_field.dart';
 import 'package:tabark_innov8/src/features/authentication/signup/presentation/bussince_logic/state.dart';
 
+import '../../../../../config/routes/app_route.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_images.dart';
 import '../bussince_logic/cubit.dart';
@@ -27,9 +29,14 @@ class SignupScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(
-          Icons.arrow_back,
-          color: AppColors.darkGreyColor2,
+        leading: GestureDetector(
+          onTap: () {
+            context.pop();
+          },
+          child: const Icon(
+            Icons.arrow_back,
+            color: AppColors.darkGreyColor2,
+          ),
         ),
         title: const CustomText(
           text: AppStrings.purchase,
@@ -42,11 +49,9 @@ class SignupScreen extends StatelessWidget {
       body: BlocConsumer<SignupCubit, SignupState>(
         listener: (context, state) {
           if (state is SignupSuccess) {
+            context.pushAndRemoveNamed(Routes.signinScreen);
           } else if (state is SignupFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(state.message),
-              backgroundColor: Colors.red,
-            ));
+            context.errorSnackBar(state.message, 2);
           }
         },
         builder: (context, state) {
@@ -55,122 +60,132 @@ class SignupScreen extends StatelessWidget {
           }
 
           return Form(
-            key: _formKey, // Wrap with Form widget
-            child: Column(
-              children: [
-                const Divider(),
-                (context.height * 0.025).emptyBoxHeight,
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: AppSize.s16),
-                  child: Column(
-                    children: [
-                      CustomTextField(
-                        hasPrefix: true,
-                        hintText: AppStrings.name,
-                        prefixIcon: SvgPicture.asset(
-                          AppImages.userIcon,
-                          height: context.height * 0.005,
-                          width: context.width * 0.005,
-                          fit: BoxFit.contain,
-                        ),
-                        onChanged: (value) => cubit.fullName = value,
-                        validate: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your name';
-                          }
-                          return null;
-                        },
-                      ),
-                      (context.height * 0.025).emptyBoxHeight,
-                      CustomTextField(
-                        hasPrefix: true,
-                        hintText: AppStrings.emailAndUserName,
-                        onChanged: (value) => cubit.userName = value,
-                        prefixIcon: SvgPicture.asset(
-                          AppImages.emailIcon,
-                          height: context.height * 0.005,
-                          width: context.width * 0.005,
-                          fit: BoxFit.contain,
-                        ),
-                        validate: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your email or username';
-                          }
-                          return null;
-                        },
-                      ),
-                      (context.height * 0.025).emptyBoxHeight,
-                      CustomTextField(
-                        hasPrefix: true,
-                        hintText: AppStrings.password,
-                        onChanged: (value) => cubit.password = value,
-                        prefixIcon: SvgPicture.asset(
-                          AppImages.lockIcon,
-                          height: context.height * 0.005,
-                          width: context.width * 0.005,
-                          fit: BoxFit.contain,
-                        ),
-                        suffixIcon: IconButton(
-                          highlightColor: Colors.transparent,
-                          onPressed: () {},
-                          icon: Icon(
-                            PhosphorIcons.eye_slash,
-                            size: context.width * 0.09,
-                            color: AppColors.darkGreyColor,
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const Divider(),
+                  (context.height * 0.025).emptyBoxHeight,
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: AppSize.s16),
+                    child: Column(
+                      children: [
+                        CustomTextField(
+                          hasPrefix: true,
+                          hintText: AppStrings.name,
+                          prefixIcon: SvgPicture.asset(
+                            AppImages.userIcon,
+                            height: context.height * 0.005,
+                            width: context.width * 0.005,
+                            fit: BoxFit.contain,
                           ),
+                          onChanged: (value) => cubit.fullName = value,
+                          validate: (value) {
+                            if (value == null || value.isEmpty) {
+                              return AppStrings.pleaseEnterYourName;
+                            }
+                            return null;
+                          },
                         ),
-                        obscure: true,
-                        validate: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          return null;
-                        },
-                      ),
-                      (context.height * 0.025).emptyBoxHeight,
-                      CustomTextField(
-                        hasPrefix: true,
-                        hintText: AppStrings.confirmPassword,
-                        prefixIcon: SvgPicture.asset(
-                          AppImages.lockIcon,
-                          height: context.height * 0.005,
-                          width: context.width * 0.005,
-                          fit: BoxFit.contain,
-                        ),
-                        suffixIcon: IconButton(
-                          highlightColor: Colors.transparent,
-                          onPressed: () {},
-                          icon: Icon(
-                            PhosphorIcons.eye_slash,
-                            size: context.width * 0.09,
-                            color: AppColors.darkGreyColor,
+                        (context.height * 0.025).emptyBoxHeight,
+                        CustomTextField(
+                          hasPrefix: true,
+                          hintText: AppStrings.emailAndUserName,
+                          onChanged: (value) => cubit.userName = value,
+                          prefixIcon: SvgPicture.asset(
+                            AppImages.emailIcon,
+                            height: context.height * 0.005,
+                            width: context.width * 0.005,
+                            fit: BoxFit.contain,
                           ),
+                          validate: (value) {
+                            if (value == null || value.isEmpty) {
+                              return AppStrings.pleaseEnterUsernameOrEmail;
+                            }
+                            return null;
+                          },
                         ),
-                        obscure: true,
-                        validate: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please confirm your password';
-                          }
-                          if (value != cubit.password) {
-                            return 'Passwords do not match';
-                          }
-                          return null;
-                        },
-                      ),
-                      (context.height * 0.025).emptyBoxHeight,
-                      CommonButton(
-                        text: AppStrings.purchase,
-                        onPressed: () {
-                          // Validate the form
-                          if (_formKey.currentState!.validate()) {
-                            cubit.registerUser();
-                          }
-                        },
-                      ),
-                    ],
+                        (context.height * 0.025).emptyBoxHeight,
+                        CustomTextField(
+                          hasPrefix: true,
+                          hintText: AppStrings.password,
+                          onChanged: (value) => cubit.password = value,
+                          prefixIcon: SvgPicture.asset(
+                            AppImages.lockIcon,
+                            height: context.height * 0.005,
+                            width: context.width * 0.005,
+                            fit: BoxFit.contain,
+                          ),
+                          suffixIcon: IconButton(
+                            highlightColor: Colors.transparent,
+                            onPressed: () {
+                              cubit.togglePasswordVisibility();
+                            },
+                            icon: Icon(
+                              cubit.showPassword
+                                  ? PhosphorIcons.eye
+                                  : PhosphorIcons.eye_slash,
+                              size: context.width * 0.09,
+                              color: AppColors.darkGreyColor,
+                            ),
+                          ),
+                          obscure: !cubit.showPassword,
+                          validate: (value) {
+                            if (value == null || value.isEmpty) {
+                              return AppStrings.pleaseEnterPassword;
+                            }
+                            return null;
+                          },
+                        ),
+                        (context.height * 0.025).emptyBoxHeight,
+                        CustomTextField(
+                          hasPrefix: true,
+                          hintText: AppStrings.confirmPassword,
+                          prefixIcon: SvgPicture.asset(
+                            AppImages.lockIcon,
+                            height: context.height * 0.005,
+                            width: context.width * 0.005,
+                            fit: BoxFit.contain,
+                          ),
+                          suffixIcon: IconButton(
+                            highlightColor: Colors.transparent,
+                            onPressed: () {
+                              cubit.toggleConfirmPasswordVisibility();
+                            },
+                            icon: Icon(
+                              cubit.showConfirmPassword
+                                  ? PhosphorIcons.eye
+                                  : PhosphorIcons.eye_slash,
+                              size: context.width * 0.09,
+                              color: AppColors.darkGreyColor,
+                            ),
+                          ),
+                          obscure: !cubit.showConfirmPassword,
+                          validate: (value) {
+                            if (value == null || value.isEmpty) {
+                              return AppStrings.pleaseEnterConfirmPassword;
+                            }
+                            if (value != cubit.password) {
+                              return AppStrings.passwordsDonotMatch;
+                            }
+                            return null;
+                          },
+                        ),
+                        (context.height * 0.025).emptyBoxHeight,
+                        CommonButton(
+                          text: AppStrings.purchase,
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              cubit.registerUser();
+                            }
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },

@@ -1,5 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:tabark_innov8/src/core/api/api_factory.dart';
+import 'package:tabark_innov8/src/features/add_mission/data/repository/repository.dart';
+import 'package:tabark_innov8/src/features/add_mission/domain/usecase/usecase.dart';
 import 'package:tabark_innov8/src/features/authentication/signin/data/datasource/data_source.dart';
 import 'package:tabark_innov8/src/features/authentication/signin/domain/use_case/login_usecase.dart';
 import 'package:tabark_innov8/src/features/authentication/signin/presentation/business_logic/cubit.dart';
@@ -9,7 +11,13 @@ import 'package:tabark_innov8/src/features/home/data/repository/repository.dart'
 import 'package:tabark_innov8/src/features/home/domain/repository/repository.dart';
 import 'package:tabark_innov8/src/features/home/presentataion/bussines_logic/cubit.dart';
 import 'package:tabark_innov8/src/features/splash/domain/repository/repository.dart';
+import 'package:tabark_innov8/src/features/view_mission/data/data_source.dart';
+import 'package:tabark_innov8/src/features/view_mission/data/repository.dart';
+import 'package:tabark_innov8/src/features/view_mission/domain/repository.dart';
+import 'package:tabark_innov8/src/features/view_mission/domain/useCases.dart';
+import 'package:tabark_innov8/src/features/view_mission/presentation/business_logic/cubit.dart';
 
+import '../../features/add_mission/presentation/bussiness_logic/cubit.dart';
 import '../../features/authentication/forget_password/data/repository/repository.dart';
 import '../../features/authentication/forget_password/domain/repository/repository.dart';
 import '../../features/authentication/forget_password/domain/usecase/usecase.dart';
@@ -46,6 +54,19 @@ Future<void> init() async {
         checkOutUseCase: sl<CheckOutUseCase>(),
         enableNotificationUseCase: sl<EnableNotificationUseCase>(),
       ));
+  sl.registerFactory<MissionCubit>(
+    () => MissionCubit(
+      sl<GetMissionTypes>(),
+      sl<AddMission>(),
+    ),
+  );
+  sl.registerFactory<ViewMissionCubit>(
+    () => ViewMissionCubit(
+      sl<GetMissionsUseCase>(),
+      sl<MissionCheckUseCase>(),
+    ),
+  );
+
   // use-cases
   sl.registerLazySingleton<LoadDataUseCase>(() => LoadDataUseCase(sl()));
   sl.registerFactory<RegisterUserUseCase>(
@@ -65,6 +86,18 @@ Future<void> init() async {
       () => CheckOutUseCase(sl<Repository>()));
   sl.registerLazySingleton<EnableNotificationUseCase>(
       () => EnableNotificationUseCase(sl<Repository>()));
+  sl.registerLazySingleton<GetMissionTypes>(
+    () => GetMissionTypes(sl<MissionRepository>()),
+  );
+  sl.registerLazySingleton<AddMission>(
+    () => AddMission(sl<MissionRepository>()),
+  );
+  sl.registerLazySingleton<GetMissionsUseCase>(
+    () => GetMissionsUseCase(sl<ViewMissionRepository>()),
+  );
+  sl.registerLazySingleton<MissionCheckUseCase>(
+    () => MissionCheckUseCase(sl<ViewMissionRepository>()),
+  );
   // RepositoryImpl
   sl.registerLazySingleton<SplashScreenRepository>(
     () => SplashScreenRepositoryImpl(),
@@ -76,7 +109,12 @@ Future<void> init() async {
     () => LoginRepositoryImpl(sl<LoginRemoteDataSource>()),
   );
   sl.registerLazySingleton<Repository>(() => RepositoryImpl(sl<ApiFactory>()));
-
+  sl.registerLazySingleton<MissionRepository>(
+    () => MissionRepository(sl<ApiFactory>()),
+  );
+  sl.registerLazySingleton<ViewMissionRepository>(
+    () => MissionRepositoryImpl(sl<MissionDataSource>()),
+  );
 // Register RegisterRemoteDataSource
   sl.registerLazySingleton<RegisterRemoteDataSource>(
     () => RegisterRemoteDataSource(sl<ApiFactory>()),
@@ -86,7 +124,9 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(sl<ApiFactory>()));
-
+  sl.registerLazySingleton<MissionDataSource>(
+    () => MissionDataSource(sl<ApiFactory>()),
+  );
   // Register ApiFactory
   sl.registerLazySingleton<ApiFactory>(() => ApiFactory());
 }
