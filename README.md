@@ -1,6 +1,7 @@
 ## Tabarak App<br>
-![tabarak_logo](https://github.com/user-attachments/assets/5d7fba87-2766-43c5-91da-d2bc93816043)
-
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/5d7fba87-2766-43c5-91da-d2bc93816043" width="200" height="200" alt="tabarak_logo">
+</p>
 
 Tabarak app is open-source  app for Android & IOS. It is built with Dart on Google's Flutter Framework.
 
