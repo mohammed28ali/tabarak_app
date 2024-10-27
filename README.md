@@ -1,16 +1,57 @@
-# tabark_innov8
+## Tabarak App<br>
 
-Tabark App
 
-## Getting Started
+Tabarak app is open-source  app for Android & IOS. It is built with Dart on Google's Flutter Framework.
 
-This project is a starting point for a Flutter application.
+![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white)
+![Android Studio](https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=white)
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## How To Start
+#### 1. [Setup Flutter](https://flutter.io/setup/)
+
+#### 2. Clone the repo
+
+```sh
+$ git clone https://github.com/mohammed28ali/tabarak_app
+$ cd tabarak_app/
+```
+
+##### 3. Get all the packages
+
+`flutter pub get`
+
+##### 4. Run the build runner command
+
+`flutter pub run build_runner build `
+
+##### 5. Run the project
+
+`flutter run` or simply press ` F5 key` if you are using VSCode
+
+## Screens
+
+-   Splash Screen
+-   Log In Screen
+-   Sign Up Screen
+-   Forget Password Screen
+-   Verify OTP Screen
+-   Home Screen
+-   Add Mission Screen
+-   View Mission Screen
+--------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
